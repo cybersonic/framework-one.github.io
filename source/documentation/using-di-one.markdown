@@ -52,6 +52,18 @@ If CFC names are unique, you can use that name to get the bean out of the factor
 
 See below for how DI/1 handles CFCs that have the same name, found in different folders.
 
+Now that you have the beanFactory setup you will need to store it in a shared scope, usually the applicaiton scope as so:
+    
+    function onApplicationStart(){
+        ...
+        var beanFactory = new framework.ioc(["/model", "/common/model"]);
+        application.beanFactory = beanFactory;
+        ...
+    }
+    
+This way you your singleton beans will always be the same across requests. 
+
+
 ## Basic DI/1 Conventions
 
 CFCs found in a folder called `beans` are assumed to be transients; otherwise CFCs are assumed to be singletons, this includes beans found in folders under the `beans` folder. A singleton has just a single instance and DI/1 will cache that instance. A transient is created afresh every time you ask DI/1 for an instance.
